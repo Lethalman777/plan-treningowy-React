@@ -1,0 +1,27 @@
+[
+  {
+    "index_nr":1,
+    "name":"wyciskanie na ławce",
+    "description":"5 razy 5 powtórzeń"
+  },
+  {
+    "index_nr":2,
+    "name":"spacer na bieżni",
+    "description":"20 min"
+  },
+  {
+    "index_nr":3,
+    "name":"podciąganie",
+    "description":"5 razy 10 powtórzeń"
+  },
+  {
+    "index_nr":4,
+    "name":"pompeczki",
+    "description":"5 razy 20 powtórzeń"
+  },
+  {
+    "index_nr":5,
+    "name":"hollow body",
+    "description":"hollow body 30 sekund"
+  }
+]
