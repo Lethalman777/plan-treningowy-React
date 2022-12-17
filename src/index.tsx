@@ -9,13 +9,16 @@ import { url } from 'inspector';
 import UserDetail from './Components/UserDetail';
 import LayoutComponent from './Components/Layout';
 import Registration from './Components/Registration';
+import Plan from './Components/Plan';
+import PlanDay from './Components/PlanDay';
+import { Day } from './classes/day';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <App/>
   </React.StrictMode>
 );
 
