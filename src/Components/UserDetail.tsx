@@ -5,13 +5,14 @@ import './App.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
+import { UserService } from '../classes/UserService';
 
 type Props = {
     
 }
 
 const UserDetail = (props:Props) => {
-  const [user,setUser]=useState<User>(new User(1,"",1,1,1,""))
+  const [user,setUser]=useState<UserType>({index_nr:1,name:"",age:0,weight:0,height:0,gender:""})
   const [pending, setPending] = useState(false)
   const navigate = useNavigate()
   const { number } = useParams()
@@ -20,7 +21,7 @@ const UserDetail = (props:Props) => {
     axios.get('http://localhost:7777/users/' + String(number)).then(response => {
       var data = response.data;
       setPending(false)
-      setUser(new User(data.index_nr, data.name, data.age, data.weight, data.height, data.gender));
+      UserService.getUser(Number(number), setUser)
     });
   },[]);
   return (
@@ -29,17 +30,17 @@ const UserDetail = (props:Props) => {
   <section className="details">
     <div >
       <h1>Informację o Tobie</h1>
-      <h2><b>Imię:</b>{ user.Name }  <b>Wiek:</b>{user.Age}  <b>Waga:</b>{user.Weight}  <b>Wzrost:</b>{user.Height}  <b>Płeć:</b>{user.Gender}</h2>
+      <h2><b>Imię:</b>{ user.name }  <b>Wiek:</b>{user.age}  <b>Waga:</b>{user.weight}  <b>Wzrost:</b>{user.height}  <b>Płeć:</b>{user.gender}</h2>
     </div>
   </section>
   {/* <section style="margin-top: 50px; display:flex;"> */}
     <button  className="editButton" onClick={()=>navigate('/UserEdit/'+String(number))}>Edytuj dane</button>
     <button  className="deleteButton" onClick={()=>{
-      axios.delete('http://localhost:7777/users/' + String(number))
-      axios.delete('http://localhost:7777/accounts/' + String(number))
+      UserService.deleteUser(Number(number))
+      UserService.deleteAccount(Number(number))
       navigate('/Login')
     }}>Usuń konto</button>
-    <button  className="planButton" >Zajrzyj do plany</button>
+    <button  className="planButton" onClick={()=>navigate('/Plan')}>Zajrzyj do plany</button>
   </section>
 {/* </section> */}
     </div>

@@ -9,6 +9,7 @@ import { Day } from '../classes/day';
 import { DayWorkout, DayWorkoutType } from '../classes/dayWorkout';
 import PlanDay from './PlanDay';
 import { Schedule, ScheduleType } from '../classes/schedule';
+import { UserService } from '../classes/UserService';
 
 type Props = {
     
@@ -22,14 +23,12 @@ const Plan = (props:Props) => {
     let week:Day[] = getWeek(currentDate)
     let tablica:number[] = [1,11,1,1,1]
 
+
     useEffect(() => {
-        setPending(true)
-        axios.get('http://localhost:7777/schedule/48').then(response => {
-          var data = response.data;
+        setPending(true)       
           setPending(false)
-          setSchedule(data)
-          setDays(getDays(setDays,days,schedule.listOfDayWorkouts,week))
-        });
+          UserService.getPlan(setSchedule)
+          setDays(getDays(setDays,days,schedule.listOfDayWorkouts,week))        
       },[]);
       
       console.log(schedule)
