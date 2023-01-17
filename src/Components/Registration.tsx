@@ -10,6 +10,7 @@ import App from './App';
 import './styles.css';
 import { text } from 'stream/consumers';
 import FormInput from './FormInput';
+import { UserService } from '../classes/UserService';
 
 
 type Props={
@@ -28,13 +29,7 @@ const Registration = (props:Props) => {
 
  useEffect(() => {
   setPending(true)
-  axios.get('http://localhost:7777/users').then(response => {
-            var data = response.data;
-            data.forEach((element: { login: string; password: string; index_nr: number; }) => {
-              setPending(false)
-              indexes.push(Number(element.index_nr))
-            });
-          });
+ UserService.getIndexes(indexes)
 },[]);
 
   const handleSubmit = async (e:any)=>{
@@ -43,20 +38,11 @@ const Registration = (props:Props) => {
     while(indexes.includes(index)){
       index++
     }
-    //setUser({...user, index_nr:index})
+    // setUser({...user, index_nr:index})
+    // setLogin({...login, index_nr:index})
     console.log(user)
-    axios.post('http://localhost:7777/accounts', {login:login.login, password:login.password, index_nr:index}).then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    axios.post('http://localhost:7777/users', {index_nr:index, name:user.name, age:user.age, weight:user.weight, height:user.height, gender:user.gender}).then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    UserService.addAccount(index, login)
+    UserService.addUser(index, user)
     navigate('/UserDetail/'+index)
   }
 

@@ -10,6 +10,7 @@ import App from './App';
 import './styles.css';
 import { text } from 'stream/consumers';
 import FormInput from './FormInput';
+import { UserService } from '../classes/UserService';
 
 type Props={
     
@@ -23,13 +24,7 @@ const Login = (props:Props) => {
  const navigate = useNavigate()
  useEffect(() => {
   setPending(true)
-  axios.get('http://localhost:7777/accounts').then(response => {
-            var data = response.data;
-            data.forEach((element: { login: string; password: string; index_nr: number; }) => {
-              setPending(false)
-              accounts.push(new LoginAccount(element.login,element.password,element.index_nr))
-            });
-          });
+  UserService.getAccounts(accounts)
 },[]);
 const handleSubmit= async (e:any)=>{
   e.preventDefault()

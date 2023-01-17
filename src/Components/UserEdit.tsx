@@ -10,6 +10,7 @@ import App from './App';
 import './styles.css';
 import { text } from 'stream/consumers';
 import FormInput from './FormInput';
+import { UserService } from '../classes/UserService';
 
 
 type Props={
@@ -25,26 +26,15 @@ const UserEdit = (props:Props) => {
  //const navigate = useNavigate()
 
  useEffect(() => {
-    setPending(true)
-    axios.get('http://localhost:7777/users/' + String(number)).then(response => {
-      var data = response.data;
+    setPending(true)   
       setPending(false)
-      setUser({index_nr:Number(number), name:data.name, age:data.age, weight:data.weight, height:data.height, gender:data.gender});
-    });
+      UserService.getUser(Number(number), setUser)
   },[]);
 
   const handleSubmit = async (e:any)=>{
     e.preventDefault()
-   axios.put('http://localhost:7777/users', user, 
-    {headers: {
-      'Content-Type': 'application/json'
-    }}).then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  navigate('/UserDetail/'+String(number))
+    UserService.editUser(user)
+    navigate('/UserDetail/'+String(number))
   }
 
   return (

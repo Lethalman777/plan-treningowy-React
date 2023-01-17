@@ -9,6 +9,7 @@ import { LoginAccount } from '../classes/loginAccount';
 import LayoutComponent from './Layout';
 import Registration from './Registration';
 import UserEdit from './UserEdit';
+import Plan from './Plan';
 
 export interface IApplicationProps {
 
@@ -24,6 +25,7 @@ const App:React.FunctionComponent<IApplicationProps> = (props) => {
         <Route path='Registration' element={<Registration />}/>
         <Route path='UserDetail/:number' element={<UserDetail />}/>
         <Route path='UserEdit/:number' element={<UserEdit />}/>
+        <Route path='Plan' element={<Plan />}/>
       </Route>
     </Routes>
     </BrowserRouter>
