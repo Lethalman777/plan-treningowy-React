@@ -11,9 +11,16 @@ import './styles.css';
 import { text } from 'stream/consumers';
 import FormInput from './FormInput';
 import { UserService } from '../classes/UserService';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 type Props={
     
+}
+type UserSubmitForm ={
+  login: string;
+  password: string;
 }
 
 const Login = (props:Props) => {
@@ -26,15 +33,41 @@ const Login = (props:Props) => {
   setPending(true)
   UserService.getAccounts(accounts)
 },[]);
-const handleSubmit= async (e:any)=>{
-  e.preventDefault()
-  accounts.forEach(element => {
+
+// const handleSubmit= async (e:any)=>{
+//   e.preventDefault()
+//   accounts.forEach(element => {
+//     if(element.Login==login.login&&element.Password==login.password){
+//       console.log(login.login +"  "+login.password)      
+//       navigate('/UserDetail/'+element.Index_nr)
+//     }
+//   });
+// }
+
+const validationSchema = Yup.object().shape({
+  login: Yup.string().required('Podaj login'),
+  password: Yup.string().required('Podaj hasło')
+})
+
+const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<UserSubmitForm>({
+    resolver: yupResolver(validationSchema)
+  });
+
+  const onSubmit = (data: UserSubmitForm) => {
+    console.log(JSON.stringify(data, null, 2));
+    accounts.forEach(element => {
     if(element.Login==login.login&&element.Password==login.password){
       console.log(login.login +"  "+login.password)      
       navigate('/UserDetail/'+element.Index_nr)
     }
   });
-}
+  };
+
   return (
     <div className="App">
      <p 
@@ -47,9 +80,24 @@ const handleSubmit= async (e:any)=>{
 >
   <div>
     <h1>Logowanie</h1>
-    <form onSubmit={handleSubmit}>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='text' inputHeader='Login'/>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='password' inputHeader='Password'/>
+    <form onSubmit={handleSubmit(onSubmit)}>
+    <label>Login:</label>
+    <input
+            type="text"
+            {...register('login')}
+            className={`form-control ${errors.login ? 'is-invalid' : ''}`}
+          />
+    <div className="invalid-feedback">{errors.login?.message}</div>
+
+    <label>Hasło:</label>
+    <input
+            type="text"
+            {...register('password')}
+            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+          />
+    <div className="invalid-feedback">{errors.password?.message}</div>
+    {/* <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='text' inputHeader='Login'/>
+    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='password' inputHeader='Password'/> */}
     <tr>
       <button
          className="logginButton"type="submit">

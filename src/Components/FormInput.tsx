@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import App from './App';
 import './styles.css';
 import { text } from 'stream/consumers';
+import PropTypes from "prop-types";
 
 type Props={
     user:UserType,
@@ -21,6 +22,7 @@ type Props={
 
 const FormInput = (props:Props) => {
  
+  
   const changeHandler = (e:any) =>{
     switch(props.inputHeader){
       case "Imie":
@@ -82,5 +84,10 @@ const FormInput = (props:Props) => {
     </div>
   );
 }
+FormInput.propTypes = {
+login: PropTypes.any.isRequired,
+password: PropTypes.any.isRequired
+  }
+
 
 export default FormInput;
