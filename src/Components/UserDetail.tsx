@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 import { UserService } from '../classes/UserService';
+import { Workout, WorkoutType } from '../classes/workout';
 
 type Props = {
     
@@ -16,13 +17,10 @@ const UserDetail = (props:Props) => {
   const [pending, setPending] = useState(false)
   const navigate = useNavigate()
   const { number } = useParams()
+  
   useEffect(() => {
-    setPending(true)
-    axios.get('http://localhost:7777/users/' + String(number)).then(response => {
-      var data = response.data;
-      setPending(false)
-      UserService.getUser(Number(number), setUser)
-    });
+    setPending(true)  
+    UserService.getUser(Number(number), setUser)
   },[]);
   return (
     <div className="UserDetail">

@@ -17,7 +17,7 @@ type Props={
 }
 
 const Login = (props:Props) => {
-  const [user, setUser]=useState<UserType>({index_nr:1,name:"",age:0,weight:0,height:0,gender:""})
+ const [user, setUser]=useState<UserType>({index_nr:1,name:"",age:0,weight:0,height:0,gender:""})
  const [login, setLogin]=useState<LoginAccountType>({login:"",password:"",confirmPassword:"",index_nr:1})
  const [pending, setPending] = useState(false)
  const [accounts, setAccounts]= useState<LoginAccount[]>([])

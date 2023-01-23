@@ -17,20 +17,19 @@ type Props = {
 
 const Plan = (props:Props) => {
     const [schedule, setSchedule] = useState<ScheduleType>({index_nr:1,weekNumber:1,userName:"",listOfDayWorkouts:[]})
-    const [pending, setPending] = useState(false)
+    //const [pending, setPending] = useState(false)
     const [days, setDays] = useState<JSX.Element[]>([])
+    let pending : boolean = true
     let currentDate:Date = new Date()
     let week:Day[] = getWeek(currentDate)
-    let tablica:number[] = [1,11,1,1,1]
-
-
-    useEffect(() => {
-        setPending(true)       
-          setPending(false)
-          UserService.getPlan(setSchedule)
-          setDays(getDays(setDays,days,schedule.listOfDayWorkouts,week))        
-      },[]);
-      
+    let tablica:number[] = [1,11,1,1,1] 
+    
+    UserService.getPlan(3, setSchedule) 
+      useEffect(()=>{  
+                     
+        getDays(setDays, schedule.listOfDayWorkouts,week)
+      },[days])
+    
       console.log(schedule)
       console.log(days)
   return (
@@ -49,16 +48,18 @@ const Plan = (props:Props) => {
     </div>
   );
 }
-const getDays = (setDays:React.Dispatch<React.SetStateAction<JSX.Element[]>>, days:JSX.Element[],dayWorkouts: DayWorkoutType[], week:Day[]) : JSX.Element[] => {
-    console.log("hjh")
+const getDays = (dayst:React.Dispatch<React.SetStateAction<JSX.Element[]>>, dayWorkouts: DayWorkoutType[], week:Day[]) => {
+    console.log(dayWorkouts)
+    let days : JSX.Element[] = []
     week.forEach(day => {
         dayWorkouts.forEach(element => {
+          console.log(day.Date)
             if(element.date==day.Date){
                 days.push(<PlanDay DayWorkout={element} day={day}/>) 
             } 
         });
     });
-    return days
+    dayst(days)
 }
 const  getWeek = (currentDate: Date): Day[] => {
     let currentDay: number = currentDate.getDate();
