@@ -4,6 +4,7 @@ import { Day } from "./day";
 import { LoginAccount, LoginAccountType } from "./loginAccount";
 import { Schedule, ScheduleType } from "./schedule";
 import { UserType } from "./user";
+import { WorkoutType } from "./workout";
 
 export class UserService{
 
@@ -21,8 +22,8 @@ export class UserService{
     });
     }
 
-    public static getPlan(setSchedule:React.Dispatch<React.SetStateAction<ScheduleType>>){
-        axios.get('http://localhost:7777/schedule/48').then(response => {
+    public static getPlan(number:number, setSchedule:React.Dispatch<React.SetStateAction<ScheduleType>>){
+        axios.get('http://localhost:7777/schedule/' + number).then(response => {
           var data = response.data;
           setSchedule(data)
         });
@@ -37,6 +38,15 @@ export class UserService{
           });
     }
 
+    public static getWorkouts(workouts:WorkoutType[]){
+      axios.get('http://localhost:7777/workouts').then(response => {
+          var data = response.data;
+          data.forEach((element: { index_nr: number; name: string; description: string}) => {
+            workouts.push(element)
+          });
+        });
+  }
+
     public static addUser(index_nr:number, user:UserType){
         axios.post('http://localhost:7777/users', {index_nr:index_nr, name:user.name, age:user.age, weight:user.weight, height:user.height, gender:user.gender}).then(function (response) {
       console.log(response);
@@ -47,15 +57,27 @@ export class UserService{
     }
 
     public static editUser(user:UserType){
-        axios.put('http://localhost:7777/users', user, 
-    {headers: {
-      'Content-Type': 'application/json'
-    }}).then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+      axios.put('http://localhost:7777/users', user, 
+        {headers: {
+          'Content-Type': 'application/json'
+        }}).then(function (response) {
+          console.log(response);
+        })
+          .catch(function (error) {
+          console.log(error);
+      });
+    }
+
+    public static editSchedule(schedule:ScheduleType){
+      axios.put('http://localhost:7777/schedule', schedule, 
+        {headers: {
+          'Content-Type': 'application/json'
+        }}).then(function (response) {
+          console.log(response);
+        })
+          .catch(function (error) {
+          console.log(error);
+      });
     }
 
     public static addAccount(index_nr:number, login:LoginAccountType){

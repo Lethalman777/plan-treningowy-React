@@ -25,13 +25,13 @@ const FormInput = (props:Props) => {
   
   const changeHandler = (e:any) =>{
     switch(props.inputHeader){
-      case "Imie":
+        case "Imie":
         props.setUser({...props.user, name:e.target.value})
         break;
         case "Login":
-          props.setLogin({...props.login, login:e.target.value})
-          break;
-          case "Password":
+        props.setLogin({...props.login, login:e.target.value})
+        break;
+        case "Password":
         props.setLogin({...props.login, password:e.target.value})
         break;
         case "Confirm Password":
