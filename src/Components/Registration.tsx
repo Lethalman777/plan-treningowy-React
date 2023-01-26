@@ -36,13 +36,11 @@ const Registration = (props:Props) => {
  const [user, setUser]=useState<UserType>({index_nr:1,name:"",age:0,weight:0,height:0,gender:""})
  const [login, setLogin]=useState<LoginAccountType>({login:"",password:"",confirmPassword:"",index_nr:1})
  const [indexes, setIndexes]=useState<number[]>([])
- const [pending, setPending] = useState(false) 
  const navigate = useNavigate()
  let index:number = 1
  //const navigate = useNavigate()
 
  useEffect(() => {
-  setPending(true)
  UserService.getIndexes(indexes)
 },[]);
 

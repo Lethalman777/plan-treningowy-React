@@ -12,31 +12,44 @@ import { JsxElement } from 'typescript';
 import { Day } from '../classes/day';
 import { WorkoutType } from '../classes/workout';
 import { ScheduleType } from '../classes/schedule';
+import { UserService } from '../classes/UserService';
+import { date } from 'yup';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 type Props = {
-    selectList : WorkoutType[]
-    setSelect : React.Dispatch<React.SetStateAction<string>>
-    setSchedule : React.Dispatch<React.SetStateAction<ScheduleType>>
-    schedule : ScheduleType
+    currentWeek:number
     date : string
 }
 
 const SelectEx = (props:Props) => {
     let selectValue : string = "option"
+    const [schedule, setSchedule] = useState<ScheduleType>({index_nr:1,weekNumber:1,userName:"",listOfDayWorkouts:[]})
+    const [selectList, setSelectList] = useState<WorkoutType[]>([])
+    
+    useEffect(()=>{    
+        UserService.getPlan(props.currentWeek, setSchedule) 
+        UserService.getWorkouts(selectList, setSelectList)  
+    }, [schedule.index_nr])   
 
-    const handleChange = (e : any) =>{
-        const dayWorkout : DayWorkoutType = {
-            date: props.date,
-            workouts: props.schedule.listOfDayWorkouts
-        }
-        props.setSchedule({...props.schedule, })
+
+    const handleChange = (e : any) =>{ 
+        console.log(e.target.value) 
+        let workout:WorkoutType={index_nr:0, name:"", description:""}
+        selectList.forEach(element => {
+            if(element.index_nr == e.target.value){  
+                workout=element 
+            }
+        });
+        schedule.listOfDayWorkouts.find((u)=>u.date==props.date)?.workouts.push(workout)
+        console.log(schedule)
+        UserService.editSchedule(schedule)
     }
 
     return (   
         <section>
             <select value={selectValue} onChange={(e)=>{handleChange(e)}}>
-                {props.selectList.map((value) => (
-                    <option value={value.name} key={value.index_nr}>
+                {selectList.map((value) => (
+                    <option value={value.index_nr} key={value.index_nr}>
                         {value.name}
                     </option>
                 ))}
