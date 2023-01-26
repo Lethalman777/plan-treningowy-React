@@ -14,34 +14,20 @@ import SelectEx from './SelectEx';
 
 type Props = {
     isEdit : boolean
-}
-
-const editHandler = () =>{
-   
-}
-const deleteHandler = () =>{
-   
+    clickHandler() : void
+    buttonText:string
+    className:string
 }
 
 const ActionButton = (props:Props) => {
     
-    if(props.isEdit){
         return (  
             <section>
-                <button className="dayButton" type="submit" onClick={()=>{
-                    editHandler()
-                }}>Edytuj</button>
+                <button className={props.className} type="submit" onClick={()=>{
+                    props.clickHandler()
+                }}>{props.buttonText}</button>
             </section>
         );
-    }else{
-        return (   
-            <section>
-                <button className="usunCwButton" type="submit" onClick={()=>{
-                    deleteHandler()
-                }}>Usuń</button>
-            </section>
-        );
-    }
 }
 
 export default ActionButton;

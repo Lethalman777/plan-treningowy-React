@@ -13,6 +13,7 @@ import { Day } from '../classes/day';
 import { ScheduleType } from '../classes/schedule';
 import SelectEx from './SelectEx';
 import DayInfo from './DayInfo';
+import ActionButton from './ActionButton';
 
 type Props = {
     isEdit:boolean
@@ -28,18 +29,14 @@ const EditButton = (props:Props) => {
   if(props.isEdit){
     return (
         <section className="dayBox">
-          <button className="dayButton" type="submit" onClick={()=>{
-            editHandler()
-          }}>Zakończ Edycję</button>
+          <ActionButton isEdit={true} clickHandler={editHandler} buttonText={'Zakończ Edycję'} className={"dayButton"}/>  
         </section>
       );
   }
   else{
     return (
         <section className="dayBox">
-          <button className="dayButton" type="submit" onClick={()=>{
-            editHandler()
-          }}>Edytuj</button>
+          <ActionButton isEdit={true} clickHandler={editHandler} buttonText={'Edytuj'} className={"dayButton"}/> 
         </section>
       );
   } 

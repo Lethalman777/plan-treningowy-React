@@ -4,6 +4,7 @@ import './styles.css';
 import { WorkoutType } from '../classes/workout'
 import { ScheduleType } from '../classes/schedule';
 import { UserService } from '../classes/UserService';
+import ActionButton from './ActionButton';
 
 type Props = {
     workout:WorkoutType
@@ -30,7 +31,10 @@ const DeleteEx = (props:Props) => {
     UserService.editSchedule(schedule)
   }
   return (
-        <button className="usunCwButton" type="submit" onClick={()=>{deleteEx()}}>Usuń</button>         
+        //<button className="usunCwButton" type="submit" onClick={()=>{deleteEx()}}>Usuń</button>  
+        <div>
+          <ActionButton isEdit={false} clickHandler={deleteEx} buttonText={'Usuń'} className={"usunCwButton" }/>
+        </div>       
   );
 }
 
