@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import UserDetail from './UserDetail';
 import { User, UserType, UserRegistration } from '../classes/user';
 import { LoginAccount, LoginAccountType } from '../classes/loginAccount';
@@ -108,6 +107,12 @@ const Registration = (props:Props) => {
     navigate('/UserDetail/'+index)
   };
 
+  const changeHandler =(e:any) =>{
+    const {name, value} = e.target;
+    setLogin({...login, [name]:value});
+    setUser({...user, [name]:value});
+  }
+
   return (
     <div className="App">
     <section className="registerBox">
@@ -119,6 +124,7 @@ const Registration = (props:Props) => {
             type="text"
             {...register('login')}
             className={`form-control ${errors.login ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.login?.message}</div>
     <label>Hasło:</label>
@@ -126,6 +132,7 @@ const Registration = (props:Props) => {
             type="password"
             {...register('password')}
             className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.password?.message}</div>
     <label>Powtórz hasło:</label>
@@ -133,6 +140,7 @@ const Registration = (props:Props) => {
             type="password"
             {...register('confirmPassword')}
             className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
     <label>Imię:</label>
@@ -140,6 +148,7 @@ const Registration = (props:Props) => {
             type="text"
             {...register('name')}
             className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.name?.message}</div>
     <label>Wiek:</label>
@@ -147,6 +156,7 @@ const Registration = (props:Props) => {
             type="text"
             {...register('age')}
             className={`form-control ${errors.age ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.age?.message}</div>
     <label>Waga:</label>
@@ -154,6 +164,7 @@ const Registration = (props:Props) => {
             type="text"
             {...register('weight')}
             className={`form-control ${errors.weight ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.weight?.message}</div>
 
@@ -162,6 +173,7 @@ const Registration = (props:Props) => {
             type="text"
             {...register('height')}
             className={`form-control ${errors.height ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.height?.message}</div>
 
@@ -170,6 +182,7 @@ const Registration = (props:Props) => {
             type="text"
             {...register('gender')}
             className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.gender?.message}</div>
 

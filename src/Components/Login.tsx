@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import UserDetail from './UserDetail';
 import { User, UserRegistration, UserType } from '../classes/user';
 import { LoginAccount, LoginAccountType } from '../classes/loginAccount';
@@ -68,6 +67,11 @@ const {
   });
   };
 
+  const changeHandler =(e:any) =>{
+    const {name, value} = e.target;
+    setLogin({...login, [name]:value});
+  }
+
   return (
     <div className="App">
      <p 
@@ -86,6 +90,7 @@ const {
             type="text"
             {...register('login')}
             className={`form-control ${errors.login ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.login?.message}</div>
 
@@ -94,6 +99,7 @@ const {
             type="text"
             {...register('password')}
             className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+            onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.password?.message}</div>
     {/* <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='text' inputHeader='Login'/>
