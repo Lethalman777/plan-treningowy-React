@@ -12,38 +12,49 @@ import { JsxElement } from 'typescript';
 import { Day } from '../classes/day';
 import { ScheduleType } from '../classes/schedule';
 import SelectEx from './SelectEx';
+import DayInfo from './DayInfo';
 
 type Props = {
     DayWorkout:DayWorkoutType,
     day:Day
-    // setSchedule:React.Dispatch<React.SetStateAction<ScheduleType>>
+    isEdit:boolean
+    currentWeek:number
 }
 
 const PlanDay = (props:Props) => {
     // const [isEdit, setIsEdit] = useState<boolean>(false)
     let DayWorkouts:DayWorkoutType[]
-    let workouts:JSX.Element[]=[]
+    let workouts:JSX.Element[]=[] 
+    let i : number = 10 
     props.DayWorkout.workouts.forEach(element => {
-        workouts.push(<PlanWorkout workout={element}/>)
+        workouts.push(<PlanWorkout key={props.DayWorkout.workouts.indexOf(element)+10} currentWeek={props.currentWeek} isEdit={props.isEdit} date={props.day.Date} workout={element}/>)
     });
+    workouts.map(post=><li>key={post}</li>)
   const editHandler = ()=>{
     // setIsEdit(true)
   }
-  return (
-    <section className="dayBox">
-      <div>{props.day.Name}</div>
-      <div>{props.day.Date}</div>
-      <section className="cwiczenieBox">
-        {workouts}
+  if(props.isEdit){
+    return (
+      <section className="dayBox">
+        <DayInfo day={props.day}/>
+        <section className="cwiczenieBox">
+          {workouts}
+        </section>     
+        <SelectEx date={props.day.Date} currentWeek={props.currentWeek}/>
       </section>
-      
-      {/* <SelectEx selectList={}/> */}
-      <button className="dayButton" type="submit" onClick={()=>{
-        editHandler()
-      }}>Edytuj</button>
-
-    </section>
-  );
+    );
+  }
+  else{
+    return (
+      <section className="dayBox">
+        <DayInfo day={props.day}/>
+        <section className="cwiczenieBox">
+          {workouts}
+        </section>     
+      </section>
+    );
+  }
+  
 }
 
 export default PlanDay;

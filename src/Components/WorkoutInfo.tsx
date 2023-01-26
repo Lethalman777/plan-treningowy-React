@@ -10,35 +10,21 @@ import { DayWorkout, DayWorkoutType } from '../classes/dayWorkout';
 import { WorkoutType } from '../classes/workout'
 import { ScheduleType } from '../classes/schedule';
 import { UserService } from '../classes/UserService';
-import WorkoutInfo from './WorkoutInfo';
-import DeleteEx from './DeleteEx';
 
 type Props = {
     workout:WorkoutType
-    date:string
-    isEdit:boolean
-    currentWeek:number
 }
 
 
 
-const PlanWorkout = (props:Props) => {
-  if(props.isEdit){
-    return (
-      <div>
-        <WorkoutInfo workout={props.workout}/>
-        <DeleteEx date={props.date} workout={props.workout} currentWeek={props.currentWeek}/>        
-      </div>
-    );
-  }
-  else{
-    return (
-      <div>
-        <WorkoutInfo workout={props.workout}/>        
-      </div>
-    );
-  }
+const WorkoutInfo = (props:Props) => {
   
+  return (
+      <section className="workout">
+        <div className="name">{props.workout.name}</div>
+        <div className="description">{props.workout.description}</div>
+      </section>         
+  );
 }
 
-export default PlanWorkout;
+export default WorkoutInfo;

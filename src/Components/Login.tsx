@@ -23,13 +23,10 @@ type UserSubmitForm ={
 }
 
 const Login = (props:Props) => {
- const [user, setUser]=useState<UserType>({index_nr:1,name:"",age:0,weight:0,height:0,gender:""})
  const [login, setLogin]=useState<LoginAccountType>({login:"",password:"",confirmPassword:"",index_nr:1})
- const [pending, setPending] = useState(false)
  const [accounts, setAccounts]= useState<LoginAccount[]>([])
  const navigate = useNavigate()
  useEffect(() => {
-  setPending(true)
   UserService.getAccounts(accounts)
 },[]);
 
@@ -102,14 +99,14 @@ const {
             onChange={(e)=>{changeHandler(e)}}
           />
     <div className="invalid-feedback">{errors.password?.message}</div>
-    {/* <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='text' inputHeader='Login'/>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='password' inputHeader='Password'/> */}
+    {/* <FormInput type={'text'} value={login.login} onChange={(e)=>{setLogin({...login, login:e.target.value})}} id={'Login'} inputHeader='Login'/>
+    <FormInput type={'password'} value={login.password} onChange={(e)=>{setLogin({...login, password:e.target.value})}}  inputHeader='Password'/> */}
     <tr>
       <button
          className="logginButton"type="submit">
         Zaloguj się
       </button>
-      
+
       <button 
        className="registerButton" onClick={()=>{navigate('/Registration')}}>
         Zarejestruj się

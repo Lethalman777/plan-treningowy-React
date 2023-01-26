@@ -19,7 +19,7 @@ type Props={
 
 const UserEdit = (props:Props) => {
     const [user, setUser]=useState<UserType>({index_nr:1,name:"",age:0,weight:0,height:0,gender:""})
- const [login, setLogin]=useState<LoginAccountType>({login:"",password:"",confirmPassword:"",index_nr:1})
+ //const [login, setLogin]=useState<LoginAccountType>({login:"",password:"",confirmPassword:"",index_nr:1})
  const [pending, setPending] = useState(false) 
  const {number} = useParams()
  const navigate = useNavigate()
@@ -42,11 +42,11 @@ const UserEdit = (props:Props) => {
     <section className="editBox">
     <h1>Edit</h1>
     <form onSubmit={handleSubmit}>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='text' inputHeader='Imie'/>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='number' inputHeader='Wiek'/>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='number' inputHeader='Waga'/>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='number' inputHeader='Wzrost'/>
-    <FormInput user={user} setUser={setUser} login={login} setLogin={setLogin} inputType='text' inputHeader='Płeć'/>
+    <FormInput type={'text'} value={user.name} onChange={(e)=>{setUser({...user, name:e.target.value})}} id={'Imie'} inputHeader='Imie'/>
+    <FormInput type={'number'} value={user.age} onChange={(e)=>{setUser({...user, age:Number(e.target.value)})}} id={'Wiek'} inputHeader='Wiek'/>
+    <FormInput type={'number'} value={user.weight} onChange={(e)=>{setUser({...user, weight:Number(e.target.value)})}} id={'Waga'} inputHeader='Waga'/>
+    <FormInput type={'number'} value={user.height} onChange={(e)=>{setUser({...user, height:Number(e.target.value)})}} id={'Wzrost'} inputHeader='Wzrost'/>
+    <FormInput type={'text'} value={user.gender} onChange={(e)=>{setUser({...user, gender:e.target.value})}} id={'Płeć'} inputHeader='Płeć'/>
     <br/>
     <button type="submit">Zaktualizuj</button>
     </form>

@@ -38,14 +38,26 @@ export class UserService{
           });
     }
 
-    public static getWorkouts(workouts:WorkoutType[]){
+    public static getWorkouts(workouts:WorkoutType[], setWorkouts:React.Dispatch<React.SetStateAction<WorkoutType[]>>){      
       axios.get('http://localhost:7777/workouts').then(response => {
-          var data = response.data;
-          data.forEach((element: { index_nr: number; name: string; description: string}) => {
-            workouts.push(element)
-          });
+          var data = response.data
+          setWorkouts(data)
+          // data.forEach((element: { index_nr: number; name: string; description: string}) => {
+          //   workouts.push(element)
+          // });
         });
-  }
+   }
+
+   public static getWorkout(index_nr:number, setWorkout:React.Dispatch<React.SetStateAction<WorkoutType>>){
+    axios.get('http://localhost:7777/workouts/'+ String(index_nr)).then(response => {
+        var data = response.data;
+        setWorkout({
+          index_nr: index_nr,
+          name: data.name,
+          description: data.description
+        })
+      });
+ }
 
     public static addUser(index_nr:number, user:UserType){
         axios.post('http://localhost:7777/users', {index_nr:index_nr, name:user.name, age:user.age, weight:user.weight, height:user.height, gender:user.gender}).then(function (response) {
@@ -57,7 +69,7 @@ export class UserService{
     }
 
     public static editUser(user:UserType){
-      axios.put('http://localhost:7777/users', user, 
+      axios.put('http://localhost:7777/users/'+user.index_nr, user, 
         {headers: {
           'Content-Type': 'application/json'
         }}).then(function (response) {
@@ -69,7 +81,7 @@ export class UserService{
     }
 
     public static editSchedule(schedule:ScheduleType){
-      axios.put('http://localhost:7777/schedule', schedule, 
+      axios.put('http://localhost:7777/schedule/'+schedule.index_nr, schedule, 
         {headers: {
           'Content-Type': 'application/json'
         }}).then(function (response) {
